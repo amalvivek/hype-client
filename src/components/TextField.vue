@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref, watch } from 'vue'
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'submit'])
 
 const modelValue = ref<string>('')
 const placeholder = 'Interview me...'
@@ -17,11 +17,23 @@ const textarea = ref<HTMLTextAreaElement>(null as never)
 let maxHeight: number
 onMounted(() => {
   maxHeight = textarea.value.scrollHeight * 3
+  textarea.value.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.shiftKey) {
+      /* empty */
+    } else if (e.key === 'Enter') {
+      e.preventDefault()
+      submit()
+    }
+  })
 })
 
 const resize = () => {
   textarea.value!.style.height = '1px'
   textarea.value!.style.height = `${Math.min(textarea.value.scrollHeight, maxHeight)}px`
+}
+
+const submit = () => {
+  emit('submit', modelValue.value)
 }
 </script>
 
@@ -38,7 +50,12 @@ const resize = () => {
       ref="textarea"
       style="scrollbar-color: rgb(249, 122, 112, 0.5) transparent"
     />
-    <img src="@/assets/icons/send.svg" class="send-icon w-6 h-full" alt="Send Icon" />
+    <img
+      src="@/assets/icons/send.svg"
+      class="send-icon w-6 h-full hover:scale-110"
+      alt="Send Icon"
+      @click="submit"
+    />
   </div>
 </template>
 

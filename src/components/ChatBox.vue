@@ -55,7 +55,7 @@ const makeRequest = async (input: string) => {
       </div>
     </div>
     <form @submit.prevent>
-      <TextField v-model="input" :key="key" />
+      <TextField v-model="input" :key="key" @submit="sendMessage" />
     </form>
   </div>
 </template>
