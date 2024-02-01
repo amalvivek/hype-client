@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import TextField from '@/components/TextField.vue'
 import { ref } from 'vue'
+import ChatFeed from '@/components/ChatFeed.vue'
 
 const chat = ref<Array<string>>([])
 const input = ref<string>('')
@@ -47,16 +48,8 @@ const makeRequest = async (input: string) => {
 
 <template>
   <div class="flex flex-col h-full justify-end">
-    <div>
-      <div class="flex flex-col">
-        <div v-for="c in chat" :key="`${c}`" class="text-white">
-          {{ c }}
-        </div>
-      </div>
-    </div>
-    <form @submit.prevent>
-      <TextField v-model="input" :key="key" @submit="sendMessage" />
-    </form>
+    <ChatFeed :messages="chat" />
+    <TextField v-model="input" :key="key" @submit="sendMessage" />
   </div>
 </template>
 

@@ -3,10 +3,10 @@ import { nextTick, onMounted, ref, watch } from 'vue'
 
 const emit = defineEmits(['update:modelValue', 'submit'])
 
-const modelValue = ref<string>('')
+const model = defineModel({ default: '' })
 const placeholder = 'Interview me...'
 
-watch(modelValue, (newValue) => {
+watch(model, (newValue) => {
   emit('update:modelValue', newValue)
   nextTick(() => {
     resize()
@@ -33,16 +33,17 @@ const resize = () => {
 }
 
 const submit = () => {
-  emit('submit', modelValue.value)
+  emit('submit')
 }
 </script>
 
 <template>
+  <div class="relative border-b-2 border-white px-2 pb-2 mx-2 mt-2 border-opacity-40" />
   <div
     class="relative border-b-2 border-white flex items-center justify-between px-2 pb-2 gap-x-2 mx-2 mt-2"
   >
     <textarea
-      v-model="modelValue"
+      v-model="model"
       class="resize-none min-h-7 w-full max-w-full text-xl bg-transparent font-bold text-white placeholder-gray-500 min-w-0 flex-shrink focus:outline-none"
       :placeholder="placeholder"
       autofocus
