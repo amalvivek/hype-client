@@ -2,16 +2,21 @@
 import TextField from '@/components/TextField.vue'
 import { ref } from 'vue'
 import ChatFeed from '@/components/ChatFeed.vue'
+import { From, type Message } from '@/shared.types'
 
-const chat = ref<Array<string>>([])
+const chat = ref<Array<Message>>([])
 const input = ref<string>('')
 const key = ref<number>(0)
+const disableChat = ref<boolean>(false)
 
 const sendMessage = () => {
   if (input.value) {
-    chat.value.push(input.value)
+    disableChat.value = true
+    chat.value.push({
+      origin: From.HUMAN,
+      content: input.value
+    })
     makeRequest(input.value)
-    key.value += 1
     input.value = ''
   }
 }
@@ -25,32 +30,41 @@ const makeRequest = async (input: string) => {
     body: JSON.stringify({
       input
     })
-  }).then(async (response) => {
-    const reader = response.body?.pipeThrough(new TextDecoderStream()).getReader()
-    let x = 0
-    let result = ''
-    chat.value.push(result)
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-      const readResult = await reader?.read()
-      if (!readResult) {
-        break
-      }
-      const { value, done } = readResult
-      if (done) break
-      x += 1
-      result += value
-      chat.value[chat.value.length - 1] = result
-    }
-    console.log('DONE With ', x, 'chunks')
   })
+    .then(async (response) => {
+      const reader = response.body?.pipeThrough(new TextDecoderStream()).getReader()
+      let x = 0
+      chat.value.push({
+        origin: From.AI,
+        content: ''
+      })
+      // eslint-disable-next-line no-constant-condition
+      while (true) {
+        const readResult = await reader?.read()
+        if (!readResult) {
+          break
+        }
+        const { value, done } = readResult
+        if (done) break
+        x += 1
+        const message = chat.value[chat.value.length - 1]
+        message.content = value
+      }
+      console.log('DONE With ', x, 'chunks')
+    })
+    .finally(() => {
+      disableChat.value = false
+      key.value += 1
+    })
 }
 </script>
 
 <template>
-  <div class="flex flex-col h-full justify-end">
+  <div
+    class="flex flex-col h-full justify-end bg-inherit rounded-t-md border border-outline before:backdrop-blur-sm p-2 overflow-hidden"
+  >
     <ChatFeed :messages="chat" />
-    <TextField v-model="input" :key="key" @submit="sendMessage" />
+    <TextField v-model="input" :key="key" :disabled="disableChat" @submit="sendMessage" />
   </div>
 </template>
 

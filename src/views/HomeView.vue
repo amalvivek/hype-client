@@ -13,7 +13,7 @@ onMounted(() => {
 <template>
   <main class="overflow-hidden">
     <div class="h-screen grid grid-rows-1 grid-cols-2">
-      <div class="h-screen col-start-1 col-end-2 p-4">
+      <div class="h-screen col-start-1 col-end-2 p-4 z-10">
         <ChatBox />
       </div>
 
