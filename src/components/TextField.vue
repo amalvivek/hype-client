@@ -16,6 +16,7 @@ watch(model, (newValue) => {
 const textarea = ref<HTMLTextAreaElement>(null as never)
 let maxHeight: number
 onMounted(() => {
+  textarea.value.focus()
   maxHeight = textarea.value.scrollHeight * 3
   textarea.value.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && e.shiftKey) {
@@ -38,25 +39,27 @@ const submit = () => {
 </script>
 
 <template>
-  <div class="relative border-b-2 border-white px-2 pb-2 mx-2 mt-2 border-opacity-40" />
-  <div
-    class="relative border-b-2 border-white flex items-center justify-between px-2 pb-2 gap-x-2 mx-2 mt-2"
-  >
-    <textarea
-      v-model="model"
-      class="resize-none min-h-7 w-full max-w-full text-xl bg-transparent font-bold text-white placeholder-gray-500 min-w-0 flex-shrink focus:outline-none"
-      :placeholder="placeholder"
-      autofocus
-      rows="1"
-      ref="textarea"
-      style="scrollbar-color: rgb(249, 122, 112, 0.5) transparent"
-    />
-    <img
-      src="@/assets/icons/send.svg"
-      class="send-icon w-6 h-full hover:scale-110"
-      alt="Send Icon"
-      @click="submit"
-    />
+  <div>
+    <div class="relative border-b-2 border-white px-2 pb-2 mx-2 mt-2 border-opacity-40" />
+    <div
+      class="relative border-b-2 border-white flex items-center justify-between px-2 pb-2 gap-x-2 mx-2 mt-2"
+    >
+      <textarea
+        v-model="model"
+        class="resize-none min-h-7 w-full max-w-full text-4xl bg-transparent font-bold text-white placeholder-gray-500 min-w-0 flex-shrink focus:outline-none"
+        :placeholder="placeholder"
+        autofocus
+        rows="1"
+        ref="textarea"
+        style="scrollbar-color: rgb(249, 122, 112, 0.5) transparent"
+      />
+      <img
+        src="@/assets/icons/send.svg"
+        class="send-icon w-6 h-full hover:scale-110"
+        alt="Send Icon"
+        @click="submit"
+      />
+    </div>
   </div>
 </template>
 

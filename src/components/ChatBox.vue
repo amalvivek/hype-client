@@ -5,13 +5,14 @@ import ChatFeed from '@/components/ChatFeed.vue'
 
 const chat = ref<Array<string>>([])
 const input = ref<string>('')
-let key = 1
+const key = ref<number>(0)
 
 const sendMessage = () => {
   if (input.value) {
     chat.value.push(input.value)
     makeRequest(input.value)
-    key += 1
+    key.value += 1
+    input.value = ''
   }
 }
 
