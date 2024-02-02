@@ -11,15 +11,15 @@ const props = defineProps({
 
 const computedClass = computed(() => {
   if (props.message.origin === From.HUMAN) {
-    return 'text-right right-0 bg-gray-700 self-end rounded-bl-xl'
+    return 'bg-gray-700 self-start rounded-bl-xl'
   }
-  return 'text-left bg-brain self-start rounded-br-xl'
+  return 'bg-brain self-end rounded-br-xl'
 })
 </script>
 
 <template>
   <div
-    class="text-white rounded-t-xl px-4 py-1.5 w-fit max-w-[70%] min-h-fit text-wrap break-words"
+    class="first:mt-auto mx-4 text-white rounded-t-xl px-4 py-1.5 w-fit max-w-[70%] min-h-fit text-wrap break-words"
     :class="computedClass"
   >
     <p class="cursor-text w-fit max-w-full">

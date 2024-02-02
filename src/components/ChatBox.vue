@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TextField from '@/components/TextField.vue'
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import ChatFeed from '@/components/ChatFeed.vue'
 import { From, type Message } from '@/shared.types'
 
@@ -8,6 +8,12 @@ const chat = ref<Array<Message>>([])
 const input = ref<string>('')
 const key = ref<number>(0)
 const disableChat = ref<boolean>(false)
+const chatFeed = ref<InstanceType<typeof ChatFeed>>(null as never)
+
+const scrollToBottom = () =>
+  nextTick(() => {
+    chatFeed.value.scrollToBottom()
+  })
 
 const sendMessage = () => {
   if (input.value) {
@@ -16,6 +22,7 @@ const sendMessage = () => {
       origin: From.HUMAN,
       content: input.value
     })
+    scrollToBottom()
     makeRequest(input.value)
     input.value = ''
   }
@@ -48,7 +55,8 @@ const makeRequest = async (input: string) => {
         if (done) break
         x += 1
         const message = chat.value[chat.value.length - 1]
-        message.content = value
+        message.content += value
+        scrollToBottom().then()
       }
       console.log('DONE With ', x, 'chunks')
     })
@@ -63,7 +71,7 @@ const makeRequest = async (input: string) => {
   <div
     class="flex flex-col h-full justify-end bg-inherit rounded-t-md border border-outline before:backdrop-blur-sm p-2 overflow-hidden"
   >
-    <ChatFeed :messages="chat" />
+    <ChatFeed ref="chatFeed" :messages="chat" />
     <TextField v-model="input" :key="key" :disabled="disableChat" @submit="sendMessage" />
   </div>
 </template>
