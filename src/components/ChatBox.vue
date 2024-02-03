@@ -72,7 +72,13 @@ const makeRequest = async (input: string) => {
     class="flex flex-col h-full justify-end rounded-t-md border border-outline bg-semitransparent backdrop-blur-3xl p-2 overflow-hidden"
   >
     <ChatFeed ref="chatFeed" :messages="chat" />
-    <TextField v-model="input" :key="key" :disabled="disableChat" @submit="sendMessage" />
+    <TextField
+      v-model="input"
+      :key="key"
+      :disabled="disableChat"
+      @submit="sendMessage"
+      @resize="scrollToBottom"
+    />
   </div>
 </template>
 

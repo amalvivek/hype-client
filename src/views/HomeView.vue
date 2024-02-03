@@ -7,14 +7,14 @@ import ChatBox from '@/components/ChatBox.vue'
 
 <template>
   <Suspense>
-    <main class="h-screen w-screen overflow-y-hidden">
-      <TitleText />
-      <div class="h-screen grid grid-rows-4 grid-cols-2">
-        <div class="h-screen col-start-1 col-end-2 p-4 z-10 row-start-1 row-end-5">
+    <main class="snap-y snap-mandatory h-screen overflow-y-scroll">
+      <TitleText class="snap-start" />
+      <div class="snap-start grid grid-rows-4 grid-cols-2 h-screen w-screen">
+        <div class="col-start-1 col-end-2 p-4 z-10 row-start-1 row-end-5">
           <ChatBox />
         </div>
 
-        <div class="h-screen col-start-1 col-end-3 row-start-1 row-end-5">
+        <div class="col-start-1 col-end-3 row-start-1 row-end-5">
           <SplineRenderer />
         </div>
 

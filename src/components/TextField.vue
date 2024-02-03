@@ -2,7 +2,7 @@
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { isElementInViewport } from '@/utils'
 
-const emit = defineEmits(['update:modelValue', 'submit'])
+const emit = defineEmits(['update:modelValue', 'submit', 'resize'])
 const props = defineProps({
   disabled: {
     type: Boolean,
@@ -36,8 +36,10 @@ onMounted(() => {
 })
 
 const resize = () => {
+  const prev = textarea.value!.style.height
   textarea.value!.style.height = '1px'
   textarea.value!.style.height = `${Math.min(textarea.value.scrollHeight, maxHeight)}px`
+  if (prev !== textarea.value!.style.height) emit('resize')
 }
 
 const submit = () => {
