@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, type PropType, ref } from 'vue'
+import { type PropType, ref } from 'vue'
 import ChatBubble from '@/components/ChatBubble.vue'
 import type { Message } from '@/shared.types'
 

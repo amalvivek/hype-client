@@ -64,7 +64,6 @@ const computedIconInversion = computed(() => (props.disabled ? 0.3 : 1))
         class="resize-none min-h-7 w-full max-w-full text-2xl bg-transparent text-white placeholder-gray-500 min-w-0 flex-shrink focus:outline-none"
         :class="computedClass"
         :placeholder="placeholder"
-        autofocus
         rows="1"
         ref="textarea"
         :disabled="disabled"
