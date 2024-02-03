@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import ChatBox from '@/components/ChatBox.vue'
-import SplineRenderer from '@/components/SplineRenderer.vue'
 import TitleText from '@/components/TitleText.vue'
 import LoadingView from '@/views/LoadingView.vue'
+import SplineRenderer from '@/components/SplineRenderer.vue'
+import ChatBox from '@/components/ChatBox.vue'
 </script>
 
 <template>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import TextField from '@/components/TextField.vue'
 import { nextTick, ref } from 'vue'
 import ChatFeed from '@/components/ChatFeed.vue'
 import { From, type Message } from '@/shared.types'
+import TextField from '@/components/TextField.vue'
 
 const chat = ref<Array<Message>>([])
 const input = ref<string>('')

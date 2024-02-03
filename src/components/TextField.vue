@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { isElementInViewport } from '@/utils'
 
 const emit = defineEmits(['update:modelValue', 'submit'])
 const props = defineProps({
@@ -22,7 +23,7 @@ watch(model, (newValue) => {
 const textarea = ref<HTMLTextAreaElement>(null as never)
 let maxHeight: number
 onMounted(() => {
-  textarea.value.focus()
+  if (isElementInViewport(textarea.value)) textarea.value.focus()
   maxHeight = textarea.value.scrollHeight * 3
   textarea.value.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && e.shiftKey) {
