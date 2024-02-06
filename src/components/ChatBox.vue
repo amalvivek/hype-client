@@ -60,6 +60,10 @@ const makeRequest = async (input: string) => {
       }
       console.log('DONE With ', x, 'chunks')
     })
+    .catch((e) => {
+      console.log(e)
+      //     todo: error handling add system message formatting e
+    })
     .finally(() => {
       disableChat.value = false
       key.value += 1
@@ -69,7 +73,7 @@ const makeRequest = async (input: string) => {
 
 <template>
   <div
-    class="flex flex-col h-full justify-end rounded-t-md border border-outline bg-semitransparent backdrop-blur-3xl p-2 overflow-hidden"
+    class="chat-box flex flex-col h-full justify-end rounded-t-md border border-outline bg-semitransparent backdrop-blur-3xl p-2"
   >
     <ChatFeed ref="chatFeed" :messages="chat" />
     <TextField
@@ -82,4 +86,16 @@ const makeRequest = async (input: string) => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.chat-box {
+  max-height: 20vh;
+  animation: grow linear forwards;
+  animation-timeline: view;
+  animation-range: entry-crossing;
+}
+@keyframes grow {
+  to {
+    max-height: 100vh;
+  }
+}
+</style>

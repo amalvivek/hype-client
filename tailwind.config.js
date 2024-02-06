@@ -12,7 +12,7 @@ export default {
         outline: 'rgba(43, 43, 43, 0.568)'
       },
       backgroundImage: {
-        brain: 'radial-gradient(rgba(231,140,141,255), rgba(128,31,46,255))'
+        brain: 'linear-gradient(90deg, rgba(148, 47, 73, 255), rgba(128,31,46,255))'
       }
     }
   },

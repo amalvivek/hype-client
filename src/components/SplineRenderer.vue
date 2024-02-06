@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { Application } from '@splinetool/runtime'
 
 const container = ref<HTMLDivElement>(null as never)
 
@@ -7,13 +8,12 @@ const splineCanvas = ref<HTMLCanvasElement>(document.createElement('canvas'))
 splineCanvas.value.style.width = '100%'
 splineCanvas.value.style.height = '100%'
 
-// const splineApp = new Application(splineCanvas.value)
-// await splineApp.load('https://draft.spline.design/NZ189O6qI8Fj05Mj/scene.splinecode')
-// splineApp.load('https://prod.spline.design/lDOBkYvHcnRaPUX1/scene.splinecode')
+const splineApp = new Application(splineCanvas.value)
+await splineApp.load('https://prod.spline.design/0CrcMR7vWF4saVJG/scene.splinecode')
 
-await new Promise((resolve, reject) => {
-  resolve(null)
-})
+// await new Promise((resolve, reject) => {
+//   resolve(null)
+// })
 
 onMounted(() => {
   container.value.appendChild(splineCanvas.value)
