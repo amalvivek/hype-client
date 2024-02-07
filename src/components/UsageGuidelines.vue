@@ -1,10 +1,12 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="flex flex-col sm:flex-row p-4 sm:p-10 opacity-0 scroll-in-out">
+  <div
+    class="flex flex-col sm:flex-row px-4 sm:px-14 opacity-0 scroll-in-out items-center justify-around gap-4"
+  >
     <div>
-      <div class="flex justify-between items-center gap-x-4">
-        <div class="border-4 rounded-full h-20 w-20 p-4">
+      <div class="flex justify-between items-center gap-4">
+        <div class="border-4 rounded-full min-h-20 h-20 min-w-20 w-20 p-4">
           <img src="@/assets/icons/chat.svg" alt="chat icon" class="brightness-0 invert" />
         </div>
         <div>
@@ -13,8 +15,8 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-between items-center gap-x-4">
-      <div class="border-4 rounded-full h-20 w-20 p-4">
+    <div class="flex justify-between items-center gap-4">
+      <div class="border-4 rounded-full min-h-20 h-20 min-w-20 w-20 p-4">
         <img src="@/assets/icons/dragdrop.svg" alt="chat icon" class="brightness-0 invert" />
       </div>
       <div>
