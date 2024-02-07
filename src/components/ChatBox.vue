@@ -72,30 +72,32 @@ const makeRequest = async (input: string) => {
 </script>
 
 <template>
-  <div
-    class="chat-box flex flex-col h-full justify-end rounded-t-md border border-outline bg-semitransparent backdrop-blur-3xl p-2"
-  >
-    <ChatFeed ref="chatFeed" :messages="chat" />
-    <TextField
-      v-model="input"
-      :key="key"
-      :disabled="disableChat"
-      @submit="sendMessage"
-      @resize="scrollToBottom"
-    />
+  <div class="my-1">
+    <div
+      class="chat-box flex flex-col h-full justify-end rounded-t-md border-outline border-2 bg-semitransparent backdrop-blur-xl p-2"
+    >
+      <ChatFeed ref="chatFeed" :messages="chat" />
+      <TextField
+        v-model="input"
+        :key="key"
+        :disabled="disableChat"
+        @submit="sendMessage"
+        @resize="scrollToBottom"
+      />
+    </div>
   </div>
 </template>
 
 <style scoped>
 .chat-box {
-  max-height: 20vh;
+  transform: scaleY(0);
   animation: grow linear forwards;
-  animation-timeline: view;
-  animation-range: entry-crossing;
+  animation-timeline: view(block);
+  animation-range: entry;
 }
 @keyframes grow {
   to {
-    max-height: 100vh;
+    transform: scaleY(1);
   }
 }
 </style>

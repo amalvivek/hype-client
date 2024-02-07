@@ -3,12 +3,13 @@ export default {
   content: ['./src/**/*.{html,js,vue,ts}'],
   theme: {
     fontFamily: {
-      sans: ['Noto Sans', 'sans-serif']
+      sans: ['Noto Sans', 'sans-serif'],
+      kalam: ['Kalam', 'cursive']
     },
     extend: {
       colors: {
         primary: '#cc635c',
-        semitransparent: 'rgb(0,0,0,0.4)',
+        semitransparent: 'rgb(0,0,0,0.2)',
         outline: 'rgba(43, 43, 43, 0.568)'
       },
       backgroundImage: {

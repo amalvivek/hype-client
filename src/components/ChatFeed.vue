@@ -25,7 +25,7 @@ defineExpose({ scrollToBottom })
 <template>
   <div
     ref="container"
-    class="flex flex-col gap-y-1 h-full overflow-y-auto"
+    class="flex flex-col gap-y-1 h-full overflow-y-auto pb-2"
     style="
       scrollbar-color: rgb(249, 122, 112, 0.5) transparent;
       direction: rtl;
