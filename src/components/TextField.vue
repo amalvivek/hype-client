@@ -59,7 +59,7 @@ const computedIconInversion = computed(() => (props.disabled ? 0.3 : 1))
   <div>
     <div class="relative border-b border-outline px-2 pb-2 mx-2 mt-2 border-opacity-20" />
     <div
-      class="relative border-b-2 flex items-center justify-between px-2 pb-2 gap-x-2 mx-2"
+      class="relative border-b-2 flex items-center justify-between px-2 pb-4 gap-x-2 mx-2 mt-4"
       :class="disabled ? 'border-opacity-50 border-gray-500' : 'border-white'"
     >
       <textarea
