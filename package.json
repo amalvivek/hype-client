@@ -14,7 +14,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@splinetool/viewer": "^1.0.48",
+    "@splinetool/viewer": "^1.0.50",
     "autoprefixer": "^10.4.17",
     "pinia": "^2.1.7",
     "postcss": "^8.4.33",

@@ -1,17 +1,4 @@
-<script setup lang="ts">
-import { computed } from 'vue'
-
-const props = defineProps({
-  scrollTop: {
-    type: Number,
-    required: true
-  }
-})
-
-const showDownChevron = computed(() => {
-  return props.scrollTop < window.innerHeight / 3
-})
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div
@@ -23,25 +10,18 @@ const showDownChevron = computed(() => {
       alt="Image for parallax effect"
     />
     <div
-      class="bg-black hide-overflow opacity-30 h-[150%] w-full row-start-1 col-start-1 row-span-1 col-span-1"
+      class="bg-black hide-overflow opacity-40 h-[150%] w-full row-start-1 col-start-1 row-span-1 col-span-1"
     />
-    <div class="z-10 h-full w-full row-start-1 col-start-1 row-span-1 col-span-1">
-      <div class="p-10 sm:p-28">
+    <div
+      class="z-10 h-full w-full row-start-1 col-start-1 row-span-1 col-span-1 flex flex-col justify-center items-center pb-20"
+    >
+      <div class="animate-fade-out p-10 sm:p-28">
         <h1
-          class="animate-fade-out text-start sm:text-7xl font-bold text-white w-[60%] leading-[1.15] text-xl"
+          class="text-center italic sm:text-9xl font-bold text-white w-full leading-[1.15] text-xl"
         >
-          INSTANT INSIGHT
+          SWIFT SCREEN
         </h1>
         <br />
-        <span class="animate-fade-out inline-block w-[60%] pt-10">
-          <span class="sm:text-5xl font-bold text-white leading-[1.50] text-lg">Chat with my </span>
-          <span class="sm:text-5xl font-bold italic text-white leading-[1.50] text-lg"
-            >AI Career Ally</span
-          >
-          <span class="sm:text-5xl font-bold text-white leading-[1.50] text-lg">
-            for a simplified screening experience!
-          </span>
-        </span>
       </div>
     </div>
     <div class="row-start-1 col-start-1 row-span-1 col-span-1 z-10">
@@ -52,7 +32,6 @@ const showDownChevron = computed(() => {
             src="@/assets/icons/down.svg"
             alt="down icon for page toggle"
             class="icon z-30 hover:scale-[1.1]] animate-bounce"
-            v-if="showDownChevron"
           />
         </div>
       </div>
@@ -73,7 +52,7 @@ const showDownChevron = computed(() => {
 .animate-fade-out {
   animation: fade-out linear forwards;
   animation-timeline: view(block);
-  animation-range: exit -10vh;
+  animation-range: exit -20vh;
 }
 
 .hide-overflow {
@@ -82,7 +61,7 @@ const showDownChevron = computed(() => {
 
 .parallax {
   opacity: 1;
-  object-position: 50% 0vh;
+  object-position: 50% 0;
   animation: slideUp linear;
   animation-timeline: view(block);
   animation-range: exit-crossing;
@@ -90,7 +69,7 @@ const showDownChevron = computed(() => {
 
 .pointer {
   opacity: 1;
-  object-position: 50% 0vh;
+  object-position: 50% 0;
   animation: slideUp linear;
   animation-timeline: view(block);
   animation-range: exit-crossing -80vh;
@@ -101,10 +80,10 @@ const showDownChevron = computed(() => {
     opacity: 0.5;
   }
   60% {
-    opacity: 0;
+    opacity: 0.1;
   }
   to {
-    object-position: 50% -100vh;
+    object-position: 50% -75vh;
     opacity: 0;
   }
 }

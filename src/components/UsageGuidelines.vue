@@ -2,7 +2,7 @@
 
 <template>
   <div
-    class="flex flex-col sm:flex-row px-4 sm:px-14 opacity-0 scroll-in-out items-center justify-around gap-4"
+    class="flex flex-col sm:flex-row px-4 pb-20 sm:px-14 opacity-0 translate-y-32 scroll-in-out items-center justify-around gap-4"
   >
     <div>
       <div class="flex justify-between items-center gap-4">
@@ -30,13 +30,19 @@
 <style scoped>
 @keyframes fade-in-out {
   20% {
-    opacity: 0;
+    opacity: 0.1;
+    transform: translateY(0);
   }
   50% {
     opacity: 1;
   }
   60% {
+    opacity: 0.1;
+    transform: translateY(-8rem);
+  }
+  65% {
     opacity: 0;
+    transform: translateY(-8rem);
   }
 }
 

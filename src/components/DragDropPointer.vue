@@ -2,7 +2,9 @@
 
 <template>
   <div class="flex flex-row justify-end m-10">
-    <div class="flex flex-col gap-y-4 items-center justify-evenly scroll-in-out opacity-0">
+    <div
+      class="flex flex-col gap-y-4 items-center justify-evenly scroll-in-out opacity-0 translate-y-32"
+    >
       <div class="font-kalam font-light text-white text-3xl text-wrap w-24 text-center">
         Drag 'n' Drop on me!
       </div>
@@ -17,12 +19,18 @@
 @keyframes fade-in-out {
   20% {
     opacity: 0;
+    transform: translateY(0);
   }
   45% {
     opacity: 1;
   }
   60% {
+    opacity: 0.1;
+    transform: translateY(-8rem);
+  }
+  65% {
     opacity: 0;
+    transform: translateY(-8rem);
   }
 }
 

@@ -96,6 +96,9 @@ const makeRequest = async (input: string) => {
   animation-range: entry;
 }
 @keyframes grow {
+  90% {
+    transform: scaleY(0.8);
+  }
   to {
     transform: scaleY(1);
   }
