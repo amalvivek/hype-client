@@ -14,29 +14,23 @@ const uploading = defineModel('uploading', { default: false })
 const store = useChatStore()
 const handleDragOver = (event: DragEvent) => {
   updateCursor.value = true
-  console.log('handle drag over')
   const allowedTypes = [
     'application/pdf',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
   ]
   const hasAllowedType = Array.from(event.dataTransfer?.items || []).some((item) => {
-    console.log(item.type)
     allowedTypes.includes(item.type)
   })
-  console.log(hasAllowedType)
   if (!hasAllowedType) {
-    console.log('preventing')
     event.preventDefault()
   }
 }
 
 const handleDrop = (event: DragEvent) => {
   updateCursor.value = false
-  console.log('in handleDrop')
   event.preventDefault()
   const files = event.dataTransfer?.files
   if (files) {
-    console.log('there is a file')
     uploadFiles(files)
   }
 }
@@ -50,9 +44,6 @@ const uploadFiles = async (files: FileList) => {
 
   store
     .makeRequest('http://localhost:3000/openai/upload', formData, props.scrollFunction)
-    .then(() => {
-      console.log('upload successful')
-    })
     .catch(() => {
       console.log('upload error')
     })
