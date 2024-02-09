@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useChatStore } from '@/stores/chat'
-import type { PropType } from 'vue'
+import { type PropType, ref } from 'vue'
 
 const props = defineProps({
   scrollFunction: {
@@ -11,6 +11,7 @@ const props = defineProps({
 
 const store = useChatStore()
 const handleDragOver = (event: DragEvent) => {
+  updateCursor.value = true
   console.log('handle drag over')
   const allowedTypes = [
     'application/pdf',
@@ -28,6 +29,7 @@ const handleDragOver = (event: DragEvent) => {
 }
 
 const handleDrop = (event: DragEvent) => {
+  updateCursor.value = false
   console.log('in handleDrop')
   event.preventDefault()
   const files = event.dataTransfer?.files
@@ -52,10 +54,21 @@ const uploadFiles = async (files: FileList) => {
       console.log('upload error')
     })
 }
+const updateCursor = ref<boolean>(false)
 </script>
 
 <template>
-  <div @dragover="handleDragOver" @drop="handleDrop" class="h-full w-full" />
+  <div
+    @dragover="handleDragOver"
+    @drop="handleDrop"
+    @dragleave="updateCursor = false"
+    :class="updateCursor ? 'drag-area' : ''"
+    class="h-full w-full cursor-grab"
+  />
 </template>
 
-<style scoped></style>
+<style scoped>
+.drag-area {
+  cursor: grabbing;
+}
+</style>

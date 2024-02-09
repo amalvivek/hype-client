@@ -25,10 +25,31 @@ const scrollToBottom = () =>
       <SplineRenderer class="col-start-1 col-end-11 row-start-1 row-end-5 sticky top-0" />
       <DragDropArea
         :scrollFunction="scrollToBottom"
-        class="col-start-6 col-end-11 row-start-8 row-end-10 z-20 opacity-0"
+        class="col-start-1 col-end-11 row-start-3 row-end-7 z-20 sticky top-0 opacity-0 animate-drop-area"
       />
     </div>
   </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+@keyframes followHead {
+  20% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(60%) translateX(25vw);
+  }
+  40% {
+    transform: scale(45%) translateX(55vw);
+  }
+  to {
+    transform: scale(45%) translateX(55vw);
+  }
+}
+
+.animate-drop-area {
+  animation: followHead linear forwards;
+  animation-timeline: view(block);
+  animation-range: contain;
+}
+</style>
