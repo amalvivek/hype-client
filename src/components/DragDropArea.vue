@@ -1,63 +1,61 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useChatStore } from '@/stores/chat'
+import type { PropType } from 'vue'
 
-const uploadedFiles = ref<File[]>([])
-const dragging = ref(false)
+const props = defineProps({
+  scrollFunction: {
+    type: Function as PropType<() => void>,
+    required: true
+  }
+})
+
+const store = useChatStore()
+const handleDragOver = (event: DragEvent) => {
+  console.log('handle drag over')
+  const allowedTypes = [
+    'application/pdf',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  ]
+  const hasAllowedType = Array.from(event.dataTransfer?.items || []).some((item) => {
+    console.log(item.type)
+    allowedTypes.includes(item.type)
+  })
+  console.log(hasAllowedType)
+  if (!hasAllowedType) {
+    console.log('preventing')
+    event.preventDefault()
+  }
+}
 
 const handleDrop = (event: DragEvent) => {
   console.log('in handleDrop')
   event.preventDefault()
-  dragging.value = false
   const files = event.dataTransfer?.files
   if (files) {
     console.log('there is a file')
-    for (let i = 0; i < files.length; i++) {
-      uploadedFiles.value.push(files[i])
-    }
+    uploadFiles(files)
   }
 }
 
-const uploadFiles = async () => {
+const uploadFiles = async (files: FileList) => {
   const formData = new FormData()
-  uploadedFiles.value.forEach((file) => {
-    formData.append('files', file)
-  })
-
-  try {
-    const response = await fetch('http://localhost:3000/openai/upload', {
-      method: 'POST',
-      body: formData
-    })
-    // Handle response as needed
-    console.log('Upload successful:', response)
-  } catch (error) {
-    console.error('Error uploading files:', error)
+  for (let i = 0; i < files.length; i++) {
+    formData.append('files', files[i])
   }
+
+  store
+    .makeRequest('http://localhost:3000/openai/upload', formData, props.scrollFunction)
+    .then(() => {
+      console.log('upload successful')
+    })
+    .catch(() => {
+      console.log('upload error')
+    })
 }
 </script>
 
 <template>
-  <div class="flex justify-center items-center h-full w-full">
-    <div
-      class="border-2 border-gray-300 border-dashed h-full p-10"
-      @dragover.prevent
-      @drop="handleDrop"
-      @dragenter="dragging = true"
-      @dragleave="dragging = false"
-      :class="{ 'border-blue-500': dragging }"
-    >
-      <div v-if="!uploadedFiles.length">
-        <p class="text-lg text-gray-500">Drag & drop files here, or click to select files</p>
-      </div>
-      <div v-else>
-        <ul>
-          <li v-for="(file, index) in uploadedFiles" :key="index" class="text-blue-500">
-            {{ file.name }}
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+  <div @dragover="handleDragOver" @drop="handleDrop" class="h-full w-full" />
 </template>
 
 <style scoped></style>

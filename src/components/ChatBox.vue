@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { nextTick, ref } from 'vue'
 import ChatFeed from '@/components/ChatFeed.vue'
-import { From, type Message } from '@/shared.types'
 import TextField from '@/components/TextField.vue'
+import { useChatStore } from '@/stores/chat'
 
-const chat = ref<Array<Message>>([])
+const store = useChatStore()
 const input = ref<string>('')
 const key = ref<number>(0)
 const disableChat = ref<boolean>(false)
@@ -15,59 +15,28 @@ const scrollToBottom = () =>
     chatFeed.value.scrollToBottom()
   })
 
+defineExpose({ chatFeed })
 const sendMessage = () => {
   if (input.value) {
     disableChat.value = true
-    chat.value.push({
-      origin: From.HUMAN,
-      content: input.value
-    })
-    scrollToBottom()
-    makeRequest(input.value)
+    store
+      .makeRequest(
+        'http://localhost:3000/openai/',
+        JSON.stringify({
+          input: input.value
+        }),
+        chatFeed.value.scrollToBottom,
+        {
+          'Content-Type': 'application/json'
+        },
+        input.value
+      )
+      .finally(() => {
+        disableChat.value = false
+        key.value += 1
+      })
     input.value = ''
   }
-}
-
-const makeRequest = async (input: string) => {
-  fetch('http://localhost:3000/openai/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      input
-    })
-  })
-    .then(async (response) => {
-      const reader = response.body?.pipeThrough(new TextDecoderStream()).getReader()
-      let x = 0
-      chat.value.push({
-        origin: From.AI,
-        content: ''
-      })
-      // eslint-disable-next-line no-constant-condition
-      while (true) {
-        const readResult = await reader?.read()
-        if (!readResult) {
-          break
-        }
-        const { value, done } = readResult
-        if (done) break
-        x += 1
-        const message = chat.value[chat.value.length - 1]
-        message.content += value
-        scrollToBottom().then()
-      }
-      console.log('DONE With ', x, 'chunks')
-    })
-    .catch((e) => {
-      console.log(e)
-      //     todo: error handling add system message formatting e
-    })
-    .finally(() => {
-      disableChat.value = false
-      key.value += 1
-    })
 }
 </script>
 
@@ -76,7 +45,7 @@ const makeRequest = async (input: string) => {
     <div
       class="chat-box flex flex-col h-full justify-end rounded-t-md border-outline border-2 bg-semitransparent backdrop-blur-xl p-2"
     >
-      <ChatFeed ref="chatFeed" :messages="chat" />
+      <ChatFeed ref="chatFeed" />
       <TextField
         v-model="input"
         :key="key"

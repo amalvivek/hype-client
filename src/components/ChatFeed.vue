@@ -1,14 +1,9 @@
 <script setup lang="ts">
-import { nextTick, type PropType, ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import ChatBubble from '@/components/ChatBubble.vue'
-import type { Message } from '@/shared.types'
+import { useChatStore } from '@/stores/chat'
 
-const props = defineProps({
-  messages: {
-    type: Array as PropType<Message[]>,
-    required: true
-  }
-})
+const store = useChatStore()
 
 const container = ref<HTMLDivElement>(null as never)
 const scrollToBottom = () => {
@@ -25,7 +20,7 @@ defineExpose({ scrollToBottom })
 <template>
   <div
     ref="container"
-    class="flex flex-col gap-y-1 h-full overflow-y-auto pb-2"
+    class="flex flex-col gap-y-5 h-full overflow-y-auto pb-2"
     style="
       scrollbar-color: rgb(249, 122, 112, 0.5) transparent;
       direction: rtl;
@@ -33,7 +28,7 @@ defineExpose({ scrollToBottom })
     "
   >
     <ChatBubble
-      v-for="(message, i) in props.messages"
+      v-for="(message, i) in store.chat"
       :message="message"
       :key="`${i}-${message.content}`"
       class="first:mt-auto bubble"
