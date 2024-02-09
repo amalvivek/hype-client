@@ -6,8 +6,10 @@ import UsageGuidelines from '@/components/UsageGuidelines.vue'
 import DragDropPointer from '@/components/DragDropPointer.vue'
 import DragDropArea from '@/components/DragDropArea.vue'
 import { nextTick, ref } from 'vue'
+import AlertBanner from '@/components/AlertBanner.vue'
 
 const chat = ref<InstanceType<typeof ChatBox>>(null as never)
+const uploading = ref<boolean>()
 
 const scrollToBottom = () =>
   nextTick(() => {
@@ -25,9 +27,11 @@ const scrollToBottom = () =>
       <SplineRenderer class="col-start-1 col-end-11 row-start-1 row-end-5 sticky top-0" />
       <DragDropArea
         :scrollFunction="scrollToBottom"
-        class="col-start-1 col-end-11 row-start-3 row-end-7 z-20 sticky top-0 opacity-0 animate-drop-area"
+        v-model:uploading="uploading"
+        class="col-start-1 col-end-11 row-start-3 row-end-7 z-30 sticky top-0 opacity-0 animate-drop-area"
       />
     </div>
+    <AlertBanner :uploading="uploading" />
   </main>
 </template>
 

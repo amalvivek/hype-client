@@ -9,6 +9,8 @@ const props = defineProps({
   }
 })
 
+const uploading = defineModel('uploading', { default: false })
+
 const store = useChatStore()
 const handleDragOver = (event: DragEvent) => {
   updateCursor.value = true
@@ -40,6 +42,7 @@ const handleDrop = (event: DragEvent) => {
 }
 
 const uploadFiles = async (files: FileList) => {
+  uploading.value = true
   const formData = new FormData()
   for (let i = 0; i < files.length; i++) {
     formData.append('files', files[i])
@@ -53,6 +56,7 @@ const uploadFiles = async (files: FileList) => {
     .catch(() => {
       console.log('upload error')
     })
+    .finally(() => (uploading.value = false))
 }
 const updateCursor = ref<boolean>(false)
 </script>
