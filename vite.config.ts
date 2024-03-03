@@ -5,6 +5,10 @@ import vue from '@vitejs/plugin-vue'
 import tailwindcss from 'tailwindcss'
 import vitePluginSingleSpa from 'vite-plugin-single-spa'
 import vercel from 'vite-plugin-vercel'
+import { viteEnv } from 'vite-plugin-single-spa/ex'
+
+let base = 'http://localhost:3004'
+if (viteEnv.built) base = 'https://hype-client.vercel.app'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -35,5 +39,5 @@ export default defineConfig({
   server: {
     hmr: false
   },
-  base: 'http://localhost:3004'
+  base: base
 })
