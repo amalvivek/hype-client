@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from 'tailwindcss'
 import vitePluginSingleSpa from 'vite-plugin-single-spa'
+import vercel from 'vite-plugin-vercel'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,7 +19,8 @@ export default defineConfig({
     vitePluginSingleSpa({
       type: 'mife',
       serverPort: 3004
-    })
+    }),
+    vercel()
   ],
   resolve: {
     alias: {
