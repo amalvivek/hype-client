@@ -11,7 +11,7 @@ const props = defineProps({
 })
 
 const model = defineModel({ default: '' })
-const placeholder = computed(() => (props.disabled ? 'Thinking...' : 'Ask my anything...'))
+const placeholder = computed(() => (props.disabled ? 'Thinking...' : 'Ask me anything...'))
 
 watch(model, (newValue) => {
   emit('update:modelValue', newValue)
