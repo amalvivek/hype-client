@@ -21,7 +21,7 @@ const sendMessage = () => {
     disableChat.value = true
     store
       .makeRequest(
-        'http://localhost:3000/openai/',
+        import.meta.env.VITE_SERVER_BASE_URL + '/openai/',
         JSON.stringify({
           input: input.value
         }),
