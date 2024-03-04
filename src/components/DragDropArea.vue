@@ -43,7 +43,11 @@ const uploadFiles = async (files: FileList) => {
   }
 
   store
-    .makeRequest('http://localhost:3000/openai/upload', formData, props.scrollFunction)
+    .makeRequest(
+      import.meta.env.VITE_SERVER_BASE_URL + '/openai/upload',
+      formData,
+      props.scrollFunction
+    )
     .catch(() => {
       console.log('upload error')
     })
